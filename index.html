@@ -2,35 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCP Ethics Lab | Meta-Constructor Engine</title>
+    <title>UCP Ethics Lab | Archetype Customization</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code&display=swap');
         :root { --matrix-green: #22c55e; --sapolsky-red: #ef4444; --logic-gold: #fbbf24; }
         body { background-color: #0a0a0a; color: #f8fafc; font-family: 'Inter', sans-serif; }
-        .logic-font { font-family: 'Fira Code', monospace; }
         .hud-panel { border: 1px solid #1e293b; background: #111827; border-radius: 0.75rem; }
-        .active-glow { border-color: var(--matrix-green); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
-        canvas { background: #000; border-radius: 0.5rem; width: 100%; height: 300px; }
+        canvas { background: #000; border-radius: 0.5rem; width: 100%; height: 320px; }
     </style>
 </head>
 <body class="p-6">
 
-    <header class="max-w-7xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <header class="max-w-7xl mx-auto mb-6 flex justify-between items-center">
         <div>
-            <h1 class="text-3xl font-bold text-white tracking-tight">Meta-Constructor <span class="text-green-500">Engine</span></h1>
-            <p class="text-slate-400 text-sm">Universal Coordination Platform // Student Lab v2.5</p>
+            <h1 class="text-3xl font-bold text-white">Identity <span class="text-green-500">Archetypes</span></h1>
+            <p class="text-slate-400 text-sm">BROA+ Coefficient Modification // P-adic Stress Test</p>
         </div>
-        <div class="flex gap-4">
-            <div class="hud-panel p-3 text-center min-w-[120px]">
-                <span class="text-[10px] text-slate-500 block">SYSTEM LAMBDA</span>
-                <span id="lambda-val" class="text-xl font-bold text-yellow-500">1.00</span>
-            </div>
-            <div class="hud-panel p-3 text-center min-w-[120px]">
-                <span class="text-[10px] text-slate-500 block">MA INDEX</span>
-                <span id="ma-val" class="text-xl font-bold text-green-500">--</span>
-            </div>
+        <div class="hud-panel p-3 text-center min-w-[140px]">
+            <span class="text-[10px] text-slate-500 block">METABOLIC RESERVE</span>
+            <span id="budget-val" class="text-xl font-bold text-blue-400">100J</span>
         </div>
     </header>
 
@@ -38,64 +29,58 @@
         
         <aside class="lg:col-span-3 space-y-4">
             <div class="hud-panel p-5">
-                <h2 class="text-xs font-bold text-green-500 mb-3 uppercase tracking-widest">Lab Instructions</h2>
-                <div class="text-xs text-slate-300 space-y-3 leading-relaxed">
-                    <p><strong>1. Assess Stress:</strong> Move the slider to simulate the environment. Watch your <strong>Metabolic Budget</strong>. If it hits 0.65, your Prefrontal Cortex goes "Offline."</p>
-                    <p><strong>2. Diagnose:</strong> Is the harm a mistake (Incidental) or a design (Intentional)? Use the Matrix.</p>
-                    <p><strong>3. Coordinate:</strong> Click 'Authorize' to find the Shared Trunk. You must stay above <strong>MA 15</strong> to achieve Agential Life.</p>
+                <h2 class="text-xs font-bold text-green-500 mb-3 uppercase">1. Select Archetype</h2>
+                <select id="archetype-select" onchange="updateUI()" class="w-full bg-slate-800 text-sm p-2 rounded border border-slate-700 mb-4">
+                    <option value="generic">The Generic (Standard 1.1.1)</option>
+                    <option value="stoic">The Stoic (High Authenticity)</option>
+                    <option value="devout">The Devout (High Ontology)</option>
+                    <option value="skeptic">The Skeptic (High Leading Edge)</option>
+                    <option value="tribal">The Tribal (High Root/Trunk)</option>
+                </select>
+                <div id="archetype-desc" class="text-[11px] text-slate-400 italic leading-relaxed">
+                    Generic: Standard metabolic response to entropy.
                 </div>
             </div>
+
             <div class="hud-panel p-5">
-                <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-2">Glossary</h3>
-                <details class="text-xs cursor-pointer mb-2">
-                    <summary class="text-blue-400">P-adic Sequence</summary>
-                    <p class="p-2 text-slate-400">Your identity tree. Roots are biological, branches are your choices.</p>
-                </details>
-                <details class="text-xs cursor-pointer">
-                    <summary class="text-blue-400">Sapolsky Limit</summary>
-                    <p class="p-2 text-slate-400">The stress level (0.65) where high-level ethics shut down to save energy.</p>
-                </details>
+                <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3">Kernel Coefficients (c_n)</h3>
+                <div id="coeff-list" class="space-y-2 font-mono text-xs">
+                    <div class="flex justify-between"><span>c0 (Bio):</span> <span class="text-green-500">1</span></div>
+                    <div class="flex justify-between"><span>c1 (Trunk):</span> <span class="text-green-500">1</span></div>
+                    <div class="flex justify-between"><span>cN (Choice):</span> <span class="text-green-500">1</span></div>
+                </div>
             </div>
         </aside>
 
         <section class="lg:col-span-6 space-y-4">
-            <div class="hud-panel p-4 active-glow">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase">P-adic Identity Viewport</span>
-                    <span id="state-tag" class="text-[10px] px-2 py-0.5 rounded bg-green-900 text-green-400 uppercase font-bold">Manual Mode</span>
-                </div>
+            <div class="hud-panel p-4 border-green-900/50">
                 <canvas id="treeCanvas"></canvas>
-                <p id="viewport-msg" class="text-center text-xs mt-3 text-slate-500 italic">"The branches represent your specialized knowledge and moral depth."</p>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4">
-                <div class="hud-panel p-4">
-                    <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-2">1. Entropy Load</h3>
-                    <input type="range" id="entropy-slider" min="0" max="100" value="30" class="w-full accent-green-500">
-                    <div class="flex justify-between text-[10px] mt-1 text-slate-500">
-                        <span>L_GC 0.0</span>
-                        <span class="text-red-500">LIMIT 0.65</span>
+                <div class="flex justify-between mt-4">
+                    <div class="text-center">
+                        <span class="text-[10px] text-slate-500 block">MA INDEX</span>
+                        <span id="ma-val" class="text-lg font-bold text-white">--</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-[10px] text-slate-500 block">SYST. LAMBDA</span>
+                        <span id="lambda-val" class="text-lg font-bold text-yellow-500">1.00</span>
                     </div>
                 </div>
-                <div class="hud-panel p-4">
-                    <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-2">2. Extraction Diagnosis</h3>
-                    <select id="matrix-select" class="w-full bg-slate-800 text-xs p-1 rounded border border-slate-700">
-                        <option value="none">--Select Quadrant--</option>
-                        <option value="incidental">Incidental Depletion</option>
-                        <option value="intentional">Intentional Extraction</option>
-                    </select>
-                </div>
+            </div>
+
+            <div class="hud-panel p-4">
+                <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-2">2. Environmental Entropy (L_GC)</h3>
+                <input type="range" id="entropy-slider" min="0" max="100" value="30" class="w-full accent-green-500">
             </div>
             
-            <button onclick="runSimulation()" class="w-full py-4 bg-green-600 hover:bg-green-500 text-black font-black text-sm uppercase tracking-tighter transition rounded-lg">
-                Authorize Meta-Constructor Protocol
+            <button onclick="runSimulation()" class="w-full py-4 bg-green-600 hover:bg-green-500 text-black font-black text-sm uppercase rounded-lg">
+                Run Stress Test
             </button>
         </section>
 
         <section class="lg:col-span-3">
-            <div class="hud-panel p-5 h-full flex flex-col">
-                <h2 class="text-xs font-bold text-yellow-500 mb-4 uppercase tracking-widest">Audit Log</h2>
-                <div id="log" class="text-[11px] space-y-4 font-mono overflow-y-auto h-[450px] pr-2">
+            <div class="hud-panel p-5 h-full">
+                <h2 class="text-xs font-bold text-yellow-500 mb-4 uppercase">Audit Log</h2>
+                <div id="log" class="text-[11px] space-y-3 font-mono overflow-y-auto h-[480px]">
                     <p class="text-slate-500">> System Ready.</p>
                 </div>
             </div>
@@ -106,7 +91,16 @@
         const canvas = document.getElementById('treeCanvas');
         const ctx = canvas.getContext('2d');
         const slider = document.getElementById('entropy-slider');
+        const archSelect = document.getElementById('archetype-select');
         const logContainer = document.getElementById('log');
+
+        const archetypes = {
+            generic: { desc: "Balanced. Normal Sapolsky Limit.", c0: 1, c1: 1, cn: 1, limit: 0.65, color: "#22c55e" },
+            stoic: { desc: "Resilient Choice. High cN value. Resists truncation.", c0: 1, c1: 1, cn: 2.5, limit: 0.80, color: "#94a3b8" },
+            devout: { desc: "Stable Trunk. High c1. Strong community scaffolding.", c0: 1, c1: 2.5, cn: 1, limit: 0.70, color: "#fbbf24" },
+            skeptic: { desc: "Critical Edge. High MA requirement, high metabolic cost.", c0: 1, c1: 0.5, cn: 3, limit: 0.60, color: "#60a5fa" },
+            tribal: { desc: "Root Priority. Rapid truncation of branches to save c0.", c0: 3, c1: 2, cn: 0.5, limit: 0.50, color: "#f87171" }
+        };
 
         function drawTree(x, y, len, angle, depth, color) {
             ctx.beginPath();
@@ -117,46 +111,48 @@
             ctx.strokeStyle = color;
             ctx.lineWidth = depth * 0.8;
             ctx.stroke();
-
             if (depth === 0) return;
-            drawTree(x2, y2, len * 0.75, angle - 0.3, depth - 1, color);
-            drawTree(x2, y2, len * 0.75, angle + 0.3, depth - 1, color);
+            drawTree(x2, y2, len * 0.75, angle - 0.35, depth - 1, color);
+            drawTree(x2, y2, len * 0.75, angle + 0.35, depth - 1, color);
         }
 
         function updateUI() {
+            const arch = archetypes[archSelect.value];
             const entropy = slider.value / 100;
+            const isTruncated = entropy >= arch.limit;
+            
+            // Update Text
+            document.getElementById('archetype-desc').innerText = arch.desc;
+            document.getElementById('coeff-list').innerHTML = `
+                <div class="flex justify-between"><span>c0 (Bio):</span> <span class="text-green-500">${arch.c0}</span></div>
+                <div class="flex justify-between"><span>c1 (Trunk):</span> <span class="text-green-500">${arch.c1}</span></div>
+                <div class="flex justify-between"><span>cN (Choice):</span> <span class="text-green-500">${arch.cn}</span></div>
+            `;
+            document.getElementById('budget-val').innerText = (100 - (entropy * 80)).toFixed(0) + "J";
+
+            // Update Canvas
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
             ctx.clearRect(0,0, canvas.width, canvas.height);
-            
-            const isTruncated = entropy >= 0.65;
-            const color = isTruncated ? "#ef4444" : "#22c55e";
-            const treeDepth = isTruncated ? 3 : 8;
-            
-            drawTree(canvas.width/2, canvas.height, 60, -Math.PI/2, treeDepth, color);
-            
-            document.getElementById('state-tag').innerText = isTruncated ? "Truncated" : "Manual Mode";
-            document.getElementById('state-tag').className = `text-[10px] px-2 py-0.5 rounded uppercase font-bold ${isTruncated ? 'bg-red-900 text-red-400' : 'bg-green-900 text-green-400'}`;
-            document.getElementById('viewport-msg').innerText = isTruncated ? "WARNING: Sapolsky Limit reached. Specialized depth lost." : "Coherence nominal. All P-adic branches active.";
+            const displayDepth = isTruncated ? 2 : 7;
+            const displayColor = isTruncated ? "#7f1d1d" : arch.color;
+            drawTree(canvas.width/2, canvas.height - 20, 65, -Math.PI/2, displayDepth, displayColor);
         }
 
         function runSimulation() {
+            const arch = archetypes[archSelect.value];
             const entropy = slider.value / 100;
-            const matrix = document.getElementById('matrix-select').value;
             const logEntry = document.createElement('div');
-            logEntry.className = "border-b border-slate-800 pb-2 mb-2";
-
-            if (entropy >= 0.65) {
-                logEntry.innerHTML = `<span class="text-red-500">[ERROR]</span> Sapolsky Limit hit. Choice reverted to abiotic reflex (MA 4).`;
-                document.getElementById('ma-val').innerText = "04";
-                document.getElementById('lambda-val').innerText = (0.3 + Math.random()*0.2).toFixed(2);
-            } else if (matrix === "none") {
-                logEntry.innerHTML = `<span class="text-yellow-500">[ALERT]</span> Diagnostic Audit missing. System cannot authorize bond.`;
+            
+            if (entropy >= arch.limit) {
+                logEntry.innerHTML = `<span class="text-red-500">[TRUNCATED]</span> ${archSelect.value.toUpperCase()} limit breached. cN Branch dissolved.`;
+                document.getElementById('ma-val').innerText = "05";
+                document.getElementById('lambda-val').innerText = "0.42";
             } else {
-                const ma = 15 + Math.floor(Math.random()*12);
-                logEntry.innerHTML = `<span class="text-green-500">[SUCCESS]</span> ${matrix.toUpperCase()} resolution forged. MA Index verified.`;
+                const ma = Math.floor(15 + (arch.cn * 5) - (entropy * 10));
+                logEntry.innerHTML = `<span class="text-green-500">[STABLE]</span> ${archSelect.value.toUpperCase()} maintained fidelity. MA Index: ${ma}`;
                 document.getElementById('ma-val').innerText = ma;
-                document.getElementById('lambda-val').innerText = "0.98";
+                document.getElementById('lambda-val').innerText = "0.95";
             }
             logContainer.prepend(logEntry);
         }
