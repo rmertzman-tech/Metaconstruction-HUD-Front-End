@@ -3,172 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCP | Meta-Constructor Engine HUD</title>
+    <title>UCP Ethics Lab | Meta-Constructor Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&display=swap');
-        :root { --matrix-glow: #22c55e; --sapolsky-red: #ef4444; --logic-gold: #f59e0b; }
-        body { background-color: #050505; color: #e2e8f0; font-family: 'Fira Code', monospace; }
-        .glow-border { border: 1px solid var(--matrix-glow); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
-        .sapolsky-alert { color: var(--sapolsky-red); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code&display=swap');
+        :root { --matrix-green: #22c55e; --sapolsky-red: #ef4444; --logic-gold: #fbbf24; }
+        body { background-color: #0a0a0a; color: #f8fafc; font-family: 'Inter', sans-serif; }
+        .logic-font { font-family: 'Fira Code', monospace; }
+        .hud-panel { border: 1px solid #1e293b; background: #111827; border-radius: 0.75rem; }
+        .active-glow { border-color: var(--matrix-green); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
+        canvas { background: #000; border-radius: 0.5rem; width: 100%; height: 300px; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-6">
 
-    <header class="max-w-6xl mx-auto mb-8 border-b border-green-900 pb-4 flex justify-between items-end">
+    <header class="max-w-7xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-            <h1 class="text-2xl font-bold tracking-tighter text-green-500">META-CONSTRUCTOR ENGINE v2.0</h1>
-            <p class="text-xs text-green-800 uppercase">Holographic Semiosphere Interface // P-adic Coordination</p>
+            <h1 class="text-3xl font-bold text-white tracking-tight">Meta-Constructor <span class="text-green-500">Engine</span></h1>
+            <p class="text-slate-400 text-sm">Universal Coordination Platform // Student Lab v2.5</p>
         </div>
-        <div class="text-right">
-            <span class="text-xs block text-gray-500">SYSTEM LAMBDA (λ)</span>
-            <span id="global-lambda" class="text-xl font-bold text-yellow-500">1.00</span>
+        <div class="flex gap-4">
+            <div class="hud-panel p-3 text-center min-w-[120px]">
+                <span class="text-[10px] text-slate-500 block">SYSTEM LAMBDA</span>
+                <span id="lambda-val" class="text-xl font-bold text-yellow-500">1.00</span>
+            </div>
+            <div class="hud-panel p-3 text-center min-w-[120px]">
+                <span class="text-[10px] text-slate-500 block">MA INDEX</span>
+                <span id="ma-val" class="text-xl font-bold text-green-500">--</span>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        <section class="lg:col-span-1 space-y-6">
-            <div class="glow-border p-6 rounded-lg bg-black">
-                <h2 class="text-sm font-bold mb-4 text-green-400 uppercase tracking-widest italic">1. Bio-Audit (Input)</h2>
-                
-                <label class="block text-xs mb-2 text-gray-400">Environmental Entropy (L_GC)</label>
-                <input type="range" id="entropy-slider" min="0" max="100" value="30" class="w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-green-500">
-                
-                <div class="flex justify-between mt-2 text-[10px] text-gray-500">
-                    <span>NOMINAL</span>
-                    <span class="text-red-500">SAPOLSKY LIMIT (0.65)</span>
-                </div>
-
-                <div class="mt-6 p-4 border border-gray-800 rounded bg-gray-900/50">
-                    <span class="text-[10px] block text-gray-500 mb-1">METABOLIC BUDGET (W)</span>
-                    <div id="budget-bar" class="h-1 bg-green-500 transition-all duration-500" style="width: 100%;"></div>
-                    <span id="budget-text" class="text-xs mt-1 block">100.0 Joules Available</span>
+        <aside class="lg:col-span-3 space-y-4">
+            <div class="hud-panel p-5">
+                <h2 class="text-xs font-bold text-green-500 mb-3 uppercase tracking-widest">Lab Instructions</h2>
+                <div class="text-xs text-slate-300 space-y-3 leading-relaxed">
+                    <p><strong>1. Assess Stress:</strong> Move the slider to simulate the environment. Watch your <strong>Metabolic Budget</strong>. If it hits 0.65, your Prefrontal Cortex goes "Offline."</p>
+                    <p><strong>2. Diagnose:</strong> Is the harm a mistake (Incidental) or a design (Intentional)? Use the Matrix.</p>
+                    <p><strong>3. Coordinate:</strong> Click 'Authorize' to find the Shared Trunk. You must stay above <strong>MA 15</strong> to achieve Agential Life.</p>
                 </div>
             </div>
-
-            <div class="glow-border p-6 rounded-lg bg-black">
-                <h2 class="text-sm font-bold mb-4 text-green-400 uppercase tracking-widest italic">2. Extraction Diagnosis</h2>
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="setMatrix('incidental')" id="btn-incidental" class="text-[10px] p-2 border border-green-900 hover:bg-green-900 transition">INCIDENTAL DEPLETION</button>
-                    <button onclick="setMatrix('intentional')" id="btn-intentional" class="text-[10px] p-2 border border-green-900 hover:bg-green-900 transition">INTENTIONAL EXTRACTION</button>
-                </div>
+            <div class="hud-panel p-5">
+                <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-2">Glossary</h3>
+                <details class="text-xs cursor-pointer mb-2">
+                    <summary class="text-blue-400">P-adic Sequence</summary>
+                    <p class="p-2 text-slate-400">Your identity tree. Roots are biological, branches are your choices.</p>
+                </details>
+                <details class="text-xs cursor-pointer">
+                    <summary class="text-blue-400">Sapolsky Limit</summary>
+                    <p class="p-2 text-slate-400">The stress level (0.65) where high-level ethics shut down to save energy.</p>
+                </details>
             </div>
-        </section>
+        </aside>
 
-        <section class="lg:col-span-1 space-y-6">
-            <div class="glow-border rounded-lg bg-black aspect-square flex flex-col items-center justify-center relative overflow-hidden">
-                <div id="p-adic-tree" class="relative w-full h-full flex items-center justify-center">
-                    <div id="tree-canvas" class="text-center p-8">
-                        <div id="agent-a" class="w-8 h-8 rounded-full border-2 border-green-500 absolute top-1/4 left-1/4 animate-pulse"></div>
-                        <div id="agent-b" class="w-8 h-8 rounded-full border-2 border-blue-500 absolute bottom-1/4 right-1/4"></div>
-                        <div id="handshake-line" class="absolute border-t border-dashed border-gray-700 w-0 transform origin-left"></div>
-                        <p id="status-display" class="text-[10px] text-gray-600 mt-40">AWAITING COORDINATION PROTOCOL...</p>
+        <section class="lg:col-span-6 space-y-4">
+            <div class="hud-panel p-4 active-glow">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase">P-adic Identity Viewport</span>
+                    <span id="state-tag" class="text-[10px] px-2 py-0.5 rounded bg-green-900 text-green-400 uppercase font-bold">Manual Mode</span>
+                </div>
+                <canvas id="treeCanvas"></canvas>
+                <p id="viewport-msg" class="text-center text-xs mt-3 text-slate-500 italic">"The branches represent your specialized knowledge and moral depth."</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="hud-panel p-4">
+                    <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-2">1. Entropy Load</h3>
+                    <input type="range" id="entropy-slider" min="0" max="100" value="30" class="w-full accent-green-500">
+                    <div class="flex justify-between text-[10px] mt-1 text-slate-500">
+                        <span>L_GC 0.0</span>
+                        <span class="text-red-500">LIMIT 0.65</span>
                     </div>
                 </div>
+                <div class="hud-panel p-4">
+                    <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-2">2. Extraction Diagnosis</h3>
+                    <select id="matrix-select" class="w-full bg-slate-800 text-xs p-1 rounded border border-slate-700">
+                        <option value="none">--Select Quadrant--</option>
+                        <option value="incidental">Incidental Depletion</option>
+                        <option value="intentional">Intentional Extraction</option>
+                    </select>
+                </div>
             </div>
-
-            <button onclick="executeHandshake()" class="w-full py-4 bg-green-600 hover:bg-green-500 text-black font-bold text-xs uppercase tracking-widest transition shadow-[0_0_20px_rgba(34,197,94,0.4)]">
-                Authorize P-Adic Handshake
+            
+            <button onclick="runSimulation()" class="w-full py-4 bg-green-600 hover:bg-green-500 text-black font-black text-sm uppercase tracking-tighter transition rounded-lg">
+                Authorize Meta-Constructor Protocol
             </button>
         </section>
 
-        <section class="lg:col-span-1 space-y-6">
-            <div class="glow-border p-6 rounded-lg bg-black h-full flex flex-col">
-                <h2 class="text-sm font-bold mb-4 text-yellow-500 uppercase tracking-widest italic">3. System Audit Results</h2>
-                
-                <div id="audit-log" class="text-[11px] space-y-4 flex-grow overflow-y-auto pr-2 max-h-[400px]">
-                    <div class="border-l-2 border-gray-700 pl-3 py-1">
-                        <span class="text-gray-500">[SYSTEM_BOOT]</span>
-                        <p>Meta-Constructor Engine Online. Markov Blanket initialized.</p>
-                    </div>
-                </div>
-
-                <div class="mt-auto pt-6 border-t border-gray-900">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <span class="text-[9px] text-gray-500 block">MA INDEX</span>
-                            <span id="ma-display" class="text-lg font-bold text-white">--</span>
-                        </div>
-                        <div>
-                            <span class="text-[9px] text-gray-500 block">AGENTIAL STATE</span>
-                            <span id="state-display" class="text-lg font-bold text-white">NOMINAL</span>
-                        </div>
-                    </div>
+        <section class="lg:col-span-3">
+            <div class="hud-panel p-5 h-full flex flex-col">
+                <h2 class="text-xs font-bold text-yellow-500 mb-4 uppercase tracking-widest">Audit Log</h2>
+                <div id="log" class="text-[11px] space-y-4 font-mono overflow-y-auto h-[450px] pr-2">
+                    <p class="text-slate-500">> System Ready.</p>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
-        let currentMatrix = null;
-        let metabolicBudget = 100;
-        let sapolskyLimit = 65;
-
+        const canvas = document.getElementById('treeCanvas');
+        const ctx = canvas.getContext('2d');
         const slider = document.getElementById('entropy-slider');
-        const budgetBar = document.getElementById('budget-bar');
-        const budgetText = document.getElementById('budget-text');
-        const auditLog = document.getElementById('audit-log');
-        const statusDisplay = document.getElementById('status-display');
+        const logContainer = document.getElementById('log');
 
-        function log(msg, type = 'info') {
-            const colors = { info: 'text-gray-400', warn: 'text-red-400', success: 'text-yellow-400' };
-            const div = document.createElement('div');
-            div.className = `border-l-2 border-gray-700 pl-3 py-1 animate-in slide-in-from-left duration-300`;
-            div.innerHTML = `<span class="text-[9px] uppercase ${colors[type]}">[${type}]</span><p>${msg}</p>`;
-            auditLog.prepend(div);
+        function drawTree(x, y, len, angle, depth, color) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            const x2 = x + Math.cos(angle) * len;
+            const y2 = y + Math.sin(angle) * len;
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = depth * 0.8;
+            ctx.stroke();
+
+            if (depth === 0) return;
+            drawTree(x2, y2, len * 0.75, angle - 0.3, depth - 1, color);
+            drawTree(x2, y2, len * 0.75, angle + 0.3, depth - 1, color);
         }
 
-        function setMatrix(type) {
-            currentMatrix = type;
-            document.querySelectorAll('button[id^="btn-"]').forEach(btn => btn.classList.remove('bg-green-900'));
-            document.getElementById(`btn-${type}`).classList.add('bg-green-900');
-            log(`Diagnosis set to ${type.toUpperCase()}. Matrix locked.`);
-        }
-
-        slider.oninput = function() {
-            const val = parseInt(this.value);
-            metabolicBudget = 100 - (val * 0.5);
-            budgetBar.style.width = `${metabolicBudget}%`;
-            budgetText.innerText = `${metabolicBudget.toFixed(1)} Joules Available`;
-
-            if (val >= sapolskyLimit) {
-                document.getElementById('state-display').innerText = "TRUNCATED";
-                document.getElementById('state-display').className = "text-lg font-bold text-red-500 animate-pulse";
-                statusDisplay.innerText = "CRITICAL: PREFRONTAL OFFLINE (READ-ONLY MODE)";
-            } else {
-                document.getElementById('state-display').innerText = "NOMINAL";
-                document.getElementById('state-display').className = "text-lg font-bold text-white";
-                statusDisplay.innerText = "MANUAL MODE ACTIVE: META-CONSTRUCTION ENABLED";
-            }
-        };
-
-        function executeHandshake() {
-            const entropy = parseInt(slider.value);
+        function updateUI() {
+            const entropy = slider.value / 100;
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.clearRect(0,0, canvas.width, canvas.height);
             
-            if (entropy >= sapolskyLimit) {
-                log("HANDSHAKE FAILED: Insufficient metabolic pressure. Prefrontal cortex truncated.", "warn");
-                return;
-            }
-
-            if (!currentMatrix) {
-                log("AUDIT FAILED: Identify Extraction Matrix quadrant before authorizing bond.", "warn");
-                return;
-            }
-
-            // P-adic Logic Check
-            const maIndex = 15 + Math.floor(Math.random() * 10);
-            document.getElementById('ma-display').innerText = maIndex;
-
-            if (currentMatrix === 'intentional') {
-                log("RESISTANCE BOND (Mandela Protocol) authorized. Morphic Fidelity preserved.", "success");
-            } else {
-                log("REDESIGN BOND authorized. System Lambda stabilized.", "success");
-            }
+            const isTruncated = entropy >= 0.65;
+            const color = isTruncated ? "#ef4444" : "#22c55e";
+            const treeDepth = isTruncated ? 3 : 8;
             
-            log(`MA INDEX VALIDATED: ${maIndex}. CIB forged into the Invariant Set.`, "info");
+            drawTree(canvas.width/2, canvas.height, 60, -Math.PI/2, treeDepth, color);
+            
+            document.getElementById('state-tag').innerText = isTruncated ? "Truncated" : "Manual Mode";
+            document.getElementById('state-tag').className = `text-[10px] px-2 py-0.5 rounded uppercase font-bold ${isTruncated ? 'bg-red-900 text-red-400' : 'bg-green-900 text-green-400'}`;
+            document.getElementById('viewport-msg').innerText = isTruncated ? "WARNING: Sapolsky Limit reached. Specialized depth lost." : "Coherence nominal. All P-adic branches active.";
         }
+
+        function runSimulation() {
+            const entropy = slider.value / 100;
+            const matrix = document.getElementById('matrix-select').value;
+            const logEntry = document.createElement('div');
+            logEntry.className = "border-b border-slate-800 pb-2 mb-2";
+
+            if (entropy >= 0.65) {
+                logEntry.innerHTML = `<span class="text-red-500">[ERROR]</span> Sapolsky Limit hit. Choice reverted to abiotic reflex (MA 4).`;
+                document.getElementById('ma-val').innerText = "04";
+                document.getElementById('lambda-val').innerText = (0.3 + Math.random()*0.2).toFixed(2);
+            } else if (matrix === "none") {
+                logEntry.innerHTML = `<span class="text-yellow-500">[ALERT]</span> Diagnostic Audit missing. System cannot authorize bond.`;
+            } else {
+                const ma = 15 + Math.floor(Math.random()*12);
+                logEntry.innerHTML = `<span class="text-green-500">[SUCCESS]</span> ${matrix.toUpperCase()} resolution forged. MA Index verified.`;
+                document.getElementById('ma-val').innerText = ma;
+                document.getElementById('lambda-val').innerText = "0.98";
+            }
+            logContainer.prepend(logEntry);
+        }
+
+        slider.oninput = updateUI;
+        window.onload = updateUI;
     </script>
 </body>
 </html>
