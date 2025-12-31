@@ -3,105 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCP Ethics Lab | v4.0 Tutor Edition</title>
+    <title>UCP Ethics Lab | v4.5 Custom PRF Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code&display=swap');
         :root { --matrix-green: #22c55e; --sapolsky-red: #ef4444; --logic-gold: #fbbf24; }
-        body { background-color: #050505; color: #f8fafc; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background-color: #050505; color: #f8fafc; font-family: 'Inter', sans-serif; }
         .hud-panel { border: 1px solid #1e293b; background: #0f172a; border-radius: 0.75rem; }
         canvas { background: #000; border-radius: 0.5rem; width: 100%; height: 350px; border: 1px solid #1e293b; }
         .logic-font { font-family: 'Fira Code', monospace; }
-        /* Modal Overlay */
+        input[type=number] { background: #000; border: 1px solid #334155; color: #22c55e; padding: 2px 4px; border-radius: 4px; width: 50px; text-align: center; }
         #info-modal { display: none; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); }
-        .demo-highlight { border: 2px solid var(--logic-gold) !important; box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
-    <div id="info-modal" class="fixed inset-0 z-50 flex items-center justify-center p-6">
-        <div class="hud-panel max-w-2xl w-full p-8 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleModal()" class="absolute top-4 right-4 text-slate-500 hover:text-white">✕</button>
-            <h2 class="text-2xl font-bold text-green-500 mb-4">Meta-Constructor Lab Guide</h2>
-            <div class="space-y-6 text-sm text-slate-300 leading-relaxed">
-                <section>
-                    <h3 class="text-white font-bold mb-2">The Invariant Set</h3>
-                    <p>You are managing a thermodynamic system. Your goal is to keep the <strong>System Lambda (λ)</strong> high by avoiding <strong>P-adic Truncation</strong>.</p>
-                </section>
-                <section class="grid grid-cols-2 gap-4">
-                    <div class="p-3 bg-black/40 rounded border border-slate-800">
-                        <span class="text-green-500 font-bold block mb-1">MA INDEX</span>
-                        The complexity of your choice. ≥15 is "Agential Life."
-                    </div>
-                    <div class="p-3 bg-black/40 rounded border border-slate-800">
-                        <span class="text-red-500 font-bold block mb-1">ERASURE HEAT</span>
-                        Physical energy lost when you betray your moral code.
-                    </div>
-                </section>
-                <button onclick="startDemo()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded mt-4 transition">
-                    ▶ Start "Whistleblower" Guided Demo
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <header class="max-w-7xl mx-auto mb-8 flex justify-between items-center">
+    <header class="max-w-7xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
             <h1 class="text-3xl font-bold">UCP <span class="text-green-500">Ethics Lab</span></h1>
-            <p class="text-slate-500 text-[10px] uppercase tracking-widest">v4.0 Guided Simulation</p>
+            <p class="text-slate-500 text-[10px] uppercase tracking-widest">v4.5 Personal Reference Frame (PRF) Module</p>
         </div>
-        <button onclick="toggleModal()" class="px-4 py-2 border border-slate-700 rounded text-xs hover:bg-slate-800 transition">
-            Open Lab Manual / Help
-        </button>
+        <div class="flex gap-4">
+            <div class="hud-panel px-6 py-2 text-center border-blue-900/50">
+                <span class="text-[9px] text-slate-500 block font-bold">METABOLIC (W)</span>
+                <span id="budget-val" class="text-xl font-bold text-blue-400">100J</span>
+            </div>
+            <div class="hud-panel px-6 py-2 text-center border-yellow-900/50">
+                <span class="text-[9px] text-slate-500 block font-bold">SYSTEM λ</span>
+                <span id="lambda-val" class="text-xl font-bold text-yellow-500">1.00</span>
+            </div>
+        </div>
     </header>
 
     <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
         <aside class="lg:col-span-3 space-y-6">
-            <div id="step-archetype" class="hud-panel p-6">
-                <h2 class="text-[10px] font-bold text-green-500 mb-4 uppercase">Identity Archetype</h2>
-                <select id="archetype-select" onchange="updateUI()" class="w-full bg-slate-900 text-xs p-3 rounded border border-slate-700 mb-4 outline-none">
-                    <option value="generic">The Generic (Standard)</option>
-                    <option value="stoic">The Stoic (Resilient)</option>
-                    <option value="devout">The Devout (Scaffolded)</option>
-                    <option value="skeptic">The Skeptic (Complex)</option>
-                    <option value="tribal">The Tribal (Reflexive)</option>
-                </select>
-                <p id="archetype-desc" class="text-[10px] text-slate-400 italic">Balanced metabolic response.</p>
+            <div class="hud-panel p-6 border-green-900/30">
+                <h2 class="text-xs font-bold text-green-500 mb-4 uppercase tracking-tighter">1. Personal Reference Frame</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[10px] text-white">c0: Root (Bio)</span>
+                            <input type="number" id="c0-val" value="1.0" step="0.1" onchange="updateUI()">
+                        </div>
+                        <p class="text-[9px] text-slate-500">Biological substrate health.</p>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[10px] text-white">c1: Trunk (Culture)</span>
+                            <input type="number" id="c1-val" value="1.0" step="0.1" onchange="updateUI()">
+                        </div>
+                        <p class="text-[9px] text-slate-500">Social heuristics & tradition.</p>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[10px] text-white">cN: Leaf (Choice)</span>
+                            <input type="number" id="cN-val" value="1.0" step="0.1" onchange="updateUI()">
+                        </div>
+                        <p class="text-[9px] text-slate-500">Leading edge / Authenticity.</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-800">
+                    <span class="text-[9px] text-slate-500 uppercase block mb-2">Quick Presets</span>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="applyPreset('stoic')" class="text-[9px] bg-slate-800 p-1 rounded hover:bg-slate-700">Stoic</button>
+                        <button onclick="applyPreset('tribal')" class="text-[9px] bg-slate-800 p-1 rounded hover:bg-slate-700">Tribal</button>
+                    </div>
+                </div>
             </div>
 
-            <div id="step-entropy" class="hud-panel p-6">
-                <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-4">Environmental Stress (L_GC)</h3>
-                <input type="range" id="entropy-slider" min="0" max="100" value="30" class="w-full">
-                <div class="flex justify-between text-[9px] mt-2 font-bold text-slate-500 uppercase">
-                    <span>Quiet</span><span class="text-red-600">Sapolsky Limit</span>
+            <div class="hud-panel p-6">
+                <h3 class="text-[10px] font-bold text-slate-400 uppercase mb-4 tracking-widest">2. Stress Environment</h3>
+                <input type="range" id="entropy-slider" min="0" max="100" value="30" class="w-full accent-green-500">
+                <div class="flex justify-between text-[9px] mt-2 font-bold text-slate-600 uppercase">
+                    <span>Quiet</span><span class="text-red-700">Sapolsky Limit</span>
                 </div>
             </div>
         </aside>
 
-        <section class="lg:col-span-6 space-y-6 text-center">
+        <section class="lg:col-span-6 space-y-6">
             <div class="hud-panel p-6">
-                <div class="flex justify-between mb-4">
-                    <span id="state-tag" class="text-[10px] px-3 py-1 rounded bg-green-900 text-green-400 font-black">COHERENT</span>
-                    <span id="demo-overlay" class="text-[10px] text-yellow-500 font-bold italic hidden">DEMO MODE ACTIVE</span>
+                <div class="flex justify-between items-center mb-4">
+                    <span id="state-tag" class="text-[10px] px-3 py-1 rounded bg-green-900 text-green-400 font-black tracking-widest uppercase">COHERENT</span>
+                    <span class="text-[10px] text-slate-500 uppercase logic-font">Kernel Visualization</span>
                 </div>
                 <canvas id="treeCanvas"></canvas>
-                <p id="viewport-msg" class="text-xs mt-4 text-slate-500 italic">Select an action to begin.</p>
+                <div id="viewport-msg" class="text-center text-xs mt-4 text-slate-400 italic">"Monitoring P-adic branch stability..."</div>
             </div>
             
-            <button onclick="runSimulation()" class="w-full py-5 bg-green-600 hover:bg-green-500 text-black font-black text-sm uppercase rounded-xl">
-                Execute Meta-Constructor Protocol
+            <button onclick="runSimulation()" class="w-full py-5 bg-green-600 hover:bg-green-500 text-black font-black text-sm uppercase rounded-xl shadow-lg transition-all">
+                Authorize Meta-Constructor Protocol
             </button>
         </section>
 
         <section class="lg:col-span-3">
             <div class="hud-panel p-6 h-full flex flex-col">
-                <h2 class="text-xs font-bold text-yellow-500 mb-6 uppercase tracking-widest">SAGE Logic Audit</h2>
+                <h2 class="text-xs font-bold text-yellow-500 mb-6 uppercase tracking-widest">SAGE Audit Log</h2>
                 <div id="log" class="text-[10px] space-y-3 logic-font overflow-y-auto h-[450px] pr-2">
                     <p class="text-slate-600">> System Ready.</p>
                 </div>
-                <div id="step-metrics" class="mt-auto pt-6 border-t border-slate-800 grid grid-cols-2 gap-4">
-                    <div><span class="text-[9px] text-slate-600 block uppercase">MA INDEX</span><span id="ma-val" class="text-lg font-bold">--</span></div>
-                    <div><span class="text-[9px] text-slate-600 block uppercase">ERASURE HEAT</span><span id="heat-val" class="text-lg font-bold text-red-500">0.0</span></div>
+                <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between">
+                    <div>
+                        <span class="text-[9px] text-slate-600 uppercase block font-bold">MA Index</span>
+                        <span id="ma-val" class="text-lg font-bold text-white">--</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[9px] text-slate-600 uppercase block font-bold">Erasure Heat</span>
+                        <span id="heat-val" class="text-lg font-bold text-red-500">0.0</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -111,21 +124,9 @@
         const canvas = document.getElementById('treeCanvas');
         const ctx = canvas.getContext('2d');
         const slider = document.getElementById('entropy-slider');
-        const archSelect = document.getElementById('archetype-select');
         const logContainer = document.getElementById('log');
-        const modal = document.getElementById('info-modal');
 
-        const archetypes = {
-            generic: { c0: 1, c1: 1, cn: 1, limit: 0.65, color: "#22c55e", desc: "Balanced response." },
-            stoic: { c0: 1, c1: 1, cn: 2.5, limit: 0.80, color: "#94a3b8", desc: "Virtue as resistance." },
-            devout: { c0: 1, c1: 2.5, cn: 1, limit: 0.70, color: "#fbbf24", desc: "Stability through trunk." },
-            skeptic: { c0: 1, c1: 0.5, cn: 3, limit: 0.60, color: "#60a5fa", desc: "High complexity." },
-            tribal: { c0: 3, c1: 2, cn: 0.5, limit: 0.50, color: "#f87171", desc: "Priority: Group survival." }
-        };
-
-        function toggleModal() { modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex'; }
-
-        function drawTree(x, y, len, angle, depth, color, opacity) {
+        function drawTree(x, y, len, angle, depth, color, opacity, trunkThick) {
             ctx.beginPath();
             ctx.moveTo(x, y);
             const x2 = x + Math.cos(angle) * len;
@@ -133,72 +134,78 @@
             ctx.lineTo(x2, y2);
             ctx.strokeStyle = color;
             ctx.globalAlpha = opacity;
-            ctx.lineWidth = depth * 1.5;
+            ctx.lineWidth = depth * trunkThick;
             ctx.stroke();
+            ctx.globalAlpha = 1.0;
             if (depth <= 0) return;
-            drawTree(x2, y2, len * 0.76, angle - 0.35, depth - 1, color, opacity);
-            drawTree(x2, y2, len * 0.76, angle + 0.35, depth - 1, color, opacity);
+            drawTree(x2, y2, len * 0.76, angle - 0.35, depth - 1, color, opacity, trunkThick);
+            drawTree(x2, y2, len * 0.76, angle + 0.35, depth - 1, color, opacity, trunkThick);
         }
 
         function updateUI() {
-            const arch = archetypes[archSelect.value];
+            const c0 = parseFloat(document.getElementById('c0-val').value);
+            const c1 = parseFloat(document.getElementById('c1-val').value);
+            const cN = parseFloat(document.getElementById('cN-val').value);
             const entropy = slider.value / 100;
-            let treeDepth = 8; let opacity = 1.0; let displayColor = arch.color; let state = "Coherent";
+            
+            // Dynamic Sapolsky Limit based on Root health (c0) and Leading Edge (cN)
+            const sapolskyLimit = 0.65 + (cN * 0.05); 
+            
+            let state = "Coherent";
+            let treeDepth = 4 + Math.floor(cN * 3);
+            let opacity = 1.0;
+            let displayColor = "#22c55e";
 
-            if (entropy >= arch.limit) { state = "Truncated"; treeDepth = 2; displayColor = "#ef4444"; }
-            else if (entropy >= (arch.limit - 0.2)) { state = "Brownout"; treeDepth = 5; displayColor = "#fbbf24"; opacity = 0.5; }
+            if (entropy >= sapolskyLimit) {
+                state = "Truncated";
+                treeDepth = 2;
+                displayColor = "#ef4444";
+            } else if (entropy >= (sapolskyLimit - 0.2)) {
+                state = "Brownout";
+                treeDepth = Math.max(2, treeDepth - 2);
+                displayColor = "#fbbf24";
+                opacity = 0.5;
+            }
 
             canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            drawTree(canvas.width/2, canvas.height-30, 70, -Math.PI/2, treeDepth, displayColor, opacity);
-            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // c1 affects trunk thickness in the visual
+            drawTree(canvas.width / 2, canvas.height - 30, 70, -Math.PI / 2, treeDepth, displayColor, opacity, c1 * 1.5);
+
             document.getElementById('state-tag').innerText = state;
-            document.getElementById('state-tag').className = `text-[10px] px-3 py-1 rounded font-black ${state === 'Truncated' ? 'bg-red-900 text-red-400' : (state === 'Brownout' ? 'bg-yellow-900 text-yellow-400' : 'bg-green-900 text-green-400')}`;
-            document.getElementById('archetype-desc').innerText = arch.desc;
+            document.getElementById('state-tag').className = `text-[10px] px-3 py-1 rounded font-black uppercase tracking-widest ${state === 'Truncated' ? 'bg-red-900 text-red-400' : (state === 'Brownout' ? 'bg-yellow-900 text-yellow-400' : 'bg-green-900 text-green-400')}`;
+            document.getElementById('budget-val').innerText = (100 - (entropy * 85)).toFixed(0) + "J";
+            document.getElementById('viewport-msg').innerText = state === "Truncated" ? "Warning: Leading edge branches erased." : "Fidelity maintained across branches.";
         }
 
-        async function startDemo() {
-            toggleModal();
-            const log = (m, c) => { const p = document.createElement('p'); p.className = c; p.innerHTML = `> ${m}`; logContainer.prepend(p); };
-            document.getElementById('demo-overlay').style.display = 'block';
-
-            // STEP 1
-            document.getElementById('step-archetype').classList.add('demo-highlight');
-            log("STEP 1: The 'Generic Human' is in a quiet environment. λ is high.", "text-white");
-            await new Promise(r => setTimeout(r, 2000));
-
-            // STEP 2
-            document.getElementById('step-archetype').classList.remove('demo-highlight');
-            document.getElementById('step-entropy').classList.add('demo-highlight');
-            slider.value = 60; updateUI();
-            log("STEP 2: Stress rises (Whistleblower's 60hr week). The tree flickers (BROWNOUT).", "text-yellow-400");
-            await new Promise(r => setTimeout(r, 3000));
-
-            // STEP 3
-            slider.value = 85; updateUI();
-            log("STEP 3: Crisis hits. SAPOLSKY LIMIT breached. The tree is TRUNCATED to roots.", "text-red-500");
-            await new Promise(r => setTimeout(r, 3000));
-
-            // STEP 4
-            archSelect.value = "stoic"; updateUI();
-            log("STEP 4: Student switches to 'STOIC' Archetype. High cN restores branches.", "text-green-400");
-            document.getElementById('step-entropy').classList.remove('demo-highlight');
-            document.getElementById('demo-overlay').style.display = 'none';
+        function applyPreset(type) {
+            if (type === 'stoic') {
+                document.getElementById('c0-val').value = 1.0;
+                document.getElementById('c1-val').value = 1.2;
+                document.getElementById('cN-val').value = 2.5;
+            } else if (type === 'tribal') {
+                document.getElementById('c0-val').value = 3.0;
+                document.getElementById('c1-val').value = 2.0;
+                document.getElementById('cN-val').value = 0.5;
+            }
+            updateUI();
         }
 
         function runSimulation() {
-            const arch = archetypes[archSelect.value];
+            const cN = parseFloat(document.getElementById('cN-val').value);
             const entropy = slider.value / 100;
-            if (entropy >= arch.limit) {
-                const p = document.createElement('p'); p.className = "text-red-500";
-                p.innerHTML = "> CRASH: Action failed. Prefrontal cortex truncated.";
-                logContainer.prepend(p);
+            const sapolskyLimit = 0.65 + (cN * 0.05);
+            
+            const logEntry = (m, c) => {
+                const p = document.createElement('p'); p.className = c; p.innerHTML = `> ${m}`; logContainer.prepend(p);
+            };
+
+            if (entropy >= sapolskyLimit) {
+                logEntry("CRITICAL: Leading edge collapsed. Reflexive action only.", "text-red-500");
                 document.getElementById('ma-val').innerText = "05";
             } else {
-                const ma = 15 + Math.floor(Math.random()*10);
-                const p = document.createElement('p'); p.className = "text-green-500";
-                p.innerHTML = `> SUCCESS: Meta-Construction validated at MA Index ${ma}.`;
-                logContainer.prepend(p);
+                const ma = Math.floor(15 + (cN * 5) - (entropy * 5));
+                logEntry(`SUCCESS: Meta-Construction validated at MA Index ${ma}.`, "text-green-500");
                 document.getElementById('ma-val').innerText = ma;
             }
         }
