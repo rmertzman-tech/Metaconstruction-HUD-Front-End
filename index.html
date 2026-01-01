@@ -3,31 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCP Ethics Lab | v6.0 Time-Lapse Edition</title>
+    <title>UCP Ethics Lab | v7.0 Case-Study Multi-Tool</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code&display=swap');
         :root { --matrix-green: #22c55e; --sapolsky-red: #ef4444; --logic-gold: #fbbf24; --atcf-blue: #3b82f6; }
         body { background-color: #050505; color: #f8fafc; font-family: 'Inter', sans-serif; }
-        .hud-panel { border: 2px solid #1e293b; background: #0f172a; border-radius: 0.75rem; transition: all 0.3s ease; }
+        .hud-panel { border: 2px solid #1e293b; background: #0f172a; border-radius: 0.75rem; }
         canvas { background: #000; border: 1px solid #334155; width: 100%; height: 320px; border-radius: 0.5rem; }
         .logic-font { font-family: 'Fira Code', monospace; }
         .atcf-bar { height: 8px; border-radius: 4px; background: #1e293b; width: 100%; overflow: hidden; }
-        .atcf-fill { height: 100%; transition: width 0.2s linear; }
-        .demo-glow { border-color: var(--logic-gold) !important; box-shadow: 0 0 15px rgba(251, 191, 36, 0.3); }
+        .atcf-fill { height: 100%; transition: width 0.3s ease; }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
     <header class="max-w-7xl mx-auto mb-10 border-b border-slate-800 pb-6 flex justify-between items-center">
         <div>
-            <h1 class="text-3xl font-black tracking-tight mb-2">UCP <span class="text-blue-500">Temporal</span> Lab</h1>
-            <p class="text-slate-400 text-[10px] uppercase tracking-widest font-bold italic">Source Code Refactoring Simulator // v6.0</p>
+            <h1 class="text-3xl font-black tracking-tight mb-2">UCP <span class="text-green-500">Case-Study</span> Engine</h1>
+            <p class="text-slate-400 text-[10px] uppercase tracking-widest font-bold italic">Identity Manifold Audit // v7.0</p>
         </div>
         <div class="flex gap-4">
-            <button onclick="startTimeLapse()" id="time-lapse-btn" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded font-black text-xs tracking-tighter transition-all flex items-center gap-2">
-                <span>▶ START TIME-LAPSE</span>
-            </button>
+            <button id="play-pause-btn" onclick="toggleSimulation()" class="bg-yellow-600 hover:bg-yellow-500 px-6 py-2 rounded font-black text-xs tracking-tighter transition">PAUSE</button>
             <div class="hud-panel px-6 py-2 text-center border-blue-900/50">
                 <span class="text-[9px] text-slate-500 block font-bold uppercase">Budget (W)</span>
                 <span id="budget-val" class="text-xl font-bold text-blue-400">100J</span>
@@ -38,30 +35,23 @@
     <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         <aside class="lg:col-span-3 space-y-6">
-            <div id="atcf-panel" class="hud-panel p-5">
-                <h2 class="text-[10px] font-bold text-blue-400 mb-4 uppercase tracking-widest">ATCF Vectors</h2>
-                <div class="space-y-4">
-                    <div title="Autobiographical Continuity (Past)">
-                        <div class="flex justify-between text-[10px] mb-1"><span>At (Past)</span><span id="at-per">100%</span></div>
-                        <div class="atcf-bar"><div id="at-fill" class="atcf-fill bg-blue-500" style="width: 100%;"></div></div>
-                    </div>
-                    <div title="Present Integration (Now)">
-                        <div class="flex justify-between text-[10px] mb-1"><span>Tt (Now)</span><span id="tt-per">100%</span></div>
-                        <div class="atcf-bar"><div id="tt-fill" class="atcf-fill bg-yellow-500" style="width: 100%;"></div></div>
-                    </div>
-                    <div title="Prospective Coherence (Future)">
-                        <div class="flex justify-between text-[10px] mb-1"><span>Ct (Future)</span><span id="ct-per">5%</span></div>
-                        <div class="atcf-bar"><div id="ct-fill" class="atcf-fill bg-green-500" style="width: 5%;"></div></div>
-                    </div>
-                </div>
+            <div class="hud-panel p-5">
+                <h2 class="text-[10px] font-bold text-yellow-500 mb-4 uppercase tracking-widest">Select Case Profile</h2>
+                <select id="case-select" onchange="loadCase()" class="w-full bg-black text-xs p-2 rounded border border-slate-700 outline-none mb-4">
+                    <option value="adolescent">Adolescent Refactoring</option>
+                    <option value="boisjoly">Boisjoly (Whistleblower)</option>
+                    <option value="mandela">Mandela (Resistance)</option>
+                    <option value="transition">Gender Refactoring</option>
+                </select>
+                <p id="case-desc" class="text-[10px] text-slate-500 italic">Modeling systemic refactoring.</p>
             </div>
 
             <div class="hud-panel p-5">
-                <h2 class="text-[10px] font-bold text-green-500 mb-4 uppercase tracking-widest">Identity Kernel</h2>
-                <div class="space-y-4 text-xs logic-font">
-                    <div class="flex justify-between"><span>c0: Root</span><input type="number" id="c0-val" value="1.0" step="0.1" onchange="updateUI()" class="bg-black text-center w-12 border border-slate-800 rounded"></div>
-                    <div class="flex justify-between"><span>c1: Trunk</span><input type="number" id="c1-val" value="1.0" step="0.1" onchange="updateUI()" class="bg-black text-center w-12 border border-slate-800 rounded"></div>
-                    <div class="flex justify-between"><span>cN: Leaf</span><input type="number" id="cN-val" value="1.0" step="0.1" onchange="updateUI()" class="bg-black text-center w-12 border border-slate-800 rounded"></div>
+                <h2 class="text-[10px] font-bold text-blue-400 mb-4 uppercase tracking-widest">ATCF Vectors</h2>
+                <div class="space-y-4">
+                    <div><div class="flex justify-between text-[10px] mb-1"><span>At (Past)</span><span id="at-per">--</span></div><div class="atcf-bar"><div id="at-fill" class="atcf-fill bg-blue-500"></div></div></div>
+                    <div><div class="flex justify-between text-[10px] mb-1"><span>Tt (Now)</span><span id="tt-per">--</span></div><div class="atcf-bar"><div id="tt-fill" class="atcf-fill bg-yellow-500"></div></div></div>
+                    <div><div class="flex justify-between text-[10px] mb-1"><span>Ct (Future)</span><span id="ct-per">--</span></div><div class="atcf-bar"><div id="ct-fill" class="atcf-fill bg-green-500"></div></div></div>
                 </div>
             </div>
         </aside>
@@ -69,36 +59,29 @@
         <section class="lg:col-span-6 space-y-6">
             <div class="hud-panel p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <span id="state-tag" class="text-[10px] px-3 py-1 rounded bg-blue-900 text-blue-400 font-black tracking-widest uppercase">READ-ONLY</span>
+                    <span id="state-tag" class="text-[10px] px-3 py-1 rounded bg-blue-900 text-blue-400 font-black tracking-widest uppercase">STABLE</span>
                     <div class="text-right">
                         <span class="text-[9px] text-slate-500 block font-bold uppercase">Morphic Debt ($D_{morph}$)</span>
                         <span id="debt-val" class="text-xl font-bold text-red-500">0.00</span>
                     </div>
                 </div>
                 <canvas id="treeCanvas"></canvas>
-                
                 <div class="mt-8">
-                    <label for="chrono-slider" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest block mb-2">Refactoring Axis (Developmental Time)</label>
+                    <label id="slider-label" for="chrono-slider" class="text-[10px] text-slate-400 font-bold uppercase tracking-widest block mb-2">Simulation Timeline</label>
                     <input type="range" id="chrono-slider" min="0" max="100" value="0" class="w-full accent-blue-500" oninput="updateUI()">
-                    <div class="flex justify-between text-[9px] mt-2 font-black text-slate-600 uppercase italic">
-                        <span>Childhood</span>
-                        <span id="trough-label" class="text-slate-700">Entropic Trough</span>
-                        <span>Coherent Adult</span>
-                    </div>
                 </div>
             </div>
         </section>
 
         <section class="lg:col-span-3">
-            <div id="narrative-panel" class="hud-panel p-6 h-full flex flex-col">
-                <h2 class="text-xs font-bold text-yellow-500 mb-4 uppercase tracking-widest">Refactoring Narrative</h2>
-                <div id="log" class="text-[11px] leading-relaxed italic text-slate-300 space-y-4 overflow-y-auto h-[450px] pr-2 scrollbar-hide">
-                    <p>> System initialized in <strong>Childhood State</strong>.</p>
-                    <p>> Agent is executing 'Legacy Code' installed by external constructors[cite: 16].</p>
+            <div class="hud-panel p-6 h-full flex flex-col">
+                <h2 class="text-xs font-bold text-yellow-500 mb-6 uppercase tracking-widest">Logic Audit</h2>
+                <div id="log" class="text-[10px] space-y-3 logic-font overflow-y-auto h-[400px] pr-2">
+                    <p class="text-slate-600">> System Ready.</p>
                 </div>
-                <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between items-end">
-                    <div><span class="text-[9px] text-slate-600 block font-bold uppercase">MA Index</span><span id="ma-val" class="text-xl font-bold text-white">--</span></div>
-                    <div class="text-right"><span class="text-[9px] text-slate-600 block font-bold uppercase">F-Vector</span><span id="f-val" class="text-xl font-bold text-green-500">0.0</span></div>
+                <div class="mt-auto pt-6 border-t border-slate-800 flex justify-between">
+                    <div><span class="text-[9px] text-slate-600 uppercase block font-bold tracking-widest">MA Index</span><span id="ma-val" class="text-2xl font-black text-white">--</span></div>
+                    <div class="text-right"><span class="text-[9px] text-slate-600 uppercase block font-bold tracking-widest">F-Vector</span><span id="f-val" class="text-2xl font-black text-green-500">0.0</span></div>
                 </div>
             </div>
         </section>
@@ -109,28 +92,65 @@
         const ctx = canvas.getContext('2d');
         const slider = document.getElementById('chrono-slider');
         const logContainer = document.getElementById('log');
-        let isRunning = false;
+        let isPaused = true;
+        let simInterval;
 
-        function drawTree(x, y, len, angle, depth, color, thickness, rootScale) {
+        const profiles = {
+            adolescent: { desc: "Source Code Refactoring: Child to Adult.", c0: 1.0, c1: 1.0, cN: 1.0 },
+            boisjoly: { desc: "Whistleblower: High ITA conflict, low c0 support.", c0: 0.7, c1: 3.0, cN: 2.5 },
+            mandela: { desc: "Resistance: Maintaining PRF against oppressive ITA.", c0: 1.5, c1: 0.1, cN: 4.0 },
+            transition: { desc: "Gender Refactoring: High D-morph realignment.", c0: 0.5, c1: 2.0, cN: 3.0 }
+        };
+
+        function toggleSimulation() {
+            isPaused = !isPaused;
+            document.getElementById('play-pause-btn').innerText = isPaused ? "RESUME" : "PAUSE";
+            if (!isPaused) runAutoStep();
+            else clearInterval(simInterval);
+        }
+
+        function runAutoStep() {
+            simInterval = setInterval(() => {
+                if (slider.value < 100) {
+                    slider.value = parseInt(slider.value) + 1;
+                    updateUI();
+                } else {
+                    clearInterval(simInterval);
+                    toggleSimulation();
+                }
+            }, 200);
+        }
+
+        function loadCase() {
+            const profile = profiles[document.getElementById('case-select').value];
+            document.getElementById('case-desc').innerText = profile.desc;
+            slider.value = 0;
+            updateUI();
+        }
+
+        function drawTree(x, y, len, angle, depth, color, thickness) {
             ctx.beginPath(); ctx.moveTo(x, y);
             const x2 = x + Math.cos(angle) * len; const y2 = y + Math.sin(angle) * len;
-            ctx.lineTo(x2, y2); ctx.strokeStyle = color;
-            ctx.lineWidth = depth * thickness * (depth === 7 ? rootScale : 1);
+            ctx.lineTo(x2, y2); ctx.strokeStyle = color; ctx.lineWidth = depth * thickness;
             ctx.stroke();
             if (depth <= 0) return;
-            drawTree(x2, y2, len * 0.76, angle - 0.35, depth - 1, color, thickness, rootScale);
-            drawTree(x2, y2, len * 0.76, angle + 0.35, depth - 1, color, thickness, rootScale);
+            drawTree(x2, y2, len * 0.76, angle - 0.35, depth - 1, color, thickness);
+            drawTree(x2, y2, len * 0.76, angle + 0.35, depth - 1, color, thickness);
         }
 
         function updateUI() {
-            const c0 = parseFloat(document.getElementById('c0-val').value) || 1.0;
-            const c1 = parseFloat(document.getElementById('c1-val').value) || 1.0;
-            const cN = parseFloat(document.getElementById('cN-val').value) || 1.0;
-            const entropy = slider.value / 100;
+            const p = profiles[document.getElementById('case-select').value];
+            const time = slider.value / 100;
+            
+            // Logic based on Research: Identity is a P-adic expansion
+            const sapolskyLimit = 0.65;
+            const dMorph = Math.abs(p.cN - (p.c1 * (1 - time))).toFixed(2);
+            document.getElementById('debt-val').innerText = dMorph;
 
-            const at = Math.max(15, 100 - (entropy * 50)); 
-            const tt = Math.max(10, 100 - (Math.abs(0.5 - entropy) * 180)); 
-            const ct = Math.min(100, entropy * 140); 
+            // ATCF Vector Calculations
+            const at = Math.max(15, 100 - (time * 50));
+            const tt = Math.max(10, 100 - (Math.abs(0.5 - time) * 180));
+            const ct = Math.min(100, time * 140);
             
             document.getElementById('at-fill').style.width = at + "%";
             document.getElementById('tt-fill').style.width = tt + "%";
@@ -139,50 +159,24 @@
             document.getElementById('tt-per').innerText = Math.round(tt) + "%";
             document.getElementById('ct-per').innerText = Math.round(ct) + "%";
 
-            const dMorph = Math.abs(((c0 + cN)/2) - c1).toFixed(2);
-            document.getElementById('debt-val').innerText = dMorph;
-            document.getElementById('f-val').innerText = (entropy * cN).toFixed(1);
+            // MA INDEX: Logic depth increases as Ct expands and dMorph shrinks
+            const ma = Math.floor(15 + (ct / 10) - (dMorph * 5));
+            document.getElementById('ma-val').innerText = ma;
+            document.getElementById('f-val').innerText = (time * p.cN).toFixed(1);
 
-            let state = entropy < 0.25 ? "READ-ONLY" : (entropy > 0.75 ? "COHERENT" : "REFACTORING");
+            let state = (dMorph > 1.5) ? "TRUNCATED" : (time < 0.3 ? "READ-ONLY" : "REFACTORING");
+            if (time > 0.8 && dMorph < 0.5) state = "COHERENT";
             document.getElementById('state-tag').innerText = state;
-            document.getElementById('state-tag').style.backgroundColor = state === "REFACTORING" ? "#713f12" : (state === "READ-ONLY" ? "#1e293b" : "#064e3b");
-            
-            document.getElementById('budget-val').innerText = ( (100 * c0) - (entropy * 50) - (dMorph * 40) ).toFixed(0) + "J";
 
             canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
             ctx.clearRect(0,0,canvas.width,canvas.height);
-            let color = state === "REFACTORING" ? "#fbbf24" : (state === "READ-ONLY" ? "#3b82f6" : "#22c55e");
-            drawTree(canvas.width / 2, canvas.height - 30, 65, -Math.PI / 2, 7, color, c1 * 1.5, c0 * 1.3);
+            let color = state === "REFACTORING" ? "#fbbf24" : (state === "TRUNCATED" ? "#ef4444" : "#22c55e");
+            drawTree(canvas.width / 2, canvas.height - 30, 65, -Math.PI / 2, 7, color, p.c1 * 1.5);
+            
+            document.getElementById('budget-val').innerText = (100 - (time * 50) - (dMorph * 20)).toFixed(0) + "J";
         }
 
-        async function startTimeLapse() {
-            if (isRunning) return;
-            isRunning = true; slider.value = 0;
-            const btn = document.getElementById('time-lapse-btn');
-            const log = (m) => { const p = document.createElement('p'); p.innerHTML = `> ${m}`; logContainer.prepend(p); };
-            btn.innerText = "REFRACTORING..."; btn.classList.add('demo-glow');
-            logContainer.innerHTML = "";
-
-            const steps = [
-                { val: 0, msg: "CHILDHOOD: Agent is a 'Read-Only Constructor'. Identity is stable but lacks depth[cite: 15, 17]." },
-                { val: 25, msg: "PHASE TRANSITION: Adolescence triggers 'Source Code Refactoring'. Write access acquired[cite: 18]." },
-                { val: 50, msg: "ENTROPIC TROUGH: Present-Time Integration (Tt) crashes. Identity feels fragmented and hollow[cite: 74, 81]." },
-                { val: 75, msg: "SYNAPTIC OPTIMIZATION: 'Garbage Collection' active. Myelination increases efficiency[cite: 98, 99]." },
-                { val: 100, msg: "COHERENCE: Final compilation complete. Future Horizon (Ct) is high-definition[cite: 107, 124]." }
-            ];
-
-            for (let i = 0; i <= 100; i++) {
-                slider.value = i; updateUI();
-                const event = steps.find(s => s.val === i);
-                if (event) log(event.msg);
-                await new Promise(r => setTimeout(r, 80));
-            }
-
-            btn.innerText = "▶ RESTART TIME-LAPSE"; btn.classList.remove('demo-glow');
-            isRunning = false;
-        }
-
-        window.onload = updateUI;
+        window.onload = () => { loadCase(); updateUI(); };
     </script>
 </body>
 </html>
