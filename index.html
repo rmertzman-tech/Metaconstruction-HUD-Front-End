@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UCP Ethics Lab | v5.7 Integrated Guidance</title>
+    <title>UCP Ethics Lab | v5.8 Morphic Alignment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code&display=swap');
@@ -12,141 +12,81 @@
         .hud-panel { border: 2px solid #1e293b; background: #0f172a; border-radius: 0.75rem; }
         canvas { background: #000; border: 1px solid #334155; width: 100%; height: 320px; border-radius: 0.5rem; }
         .logic-font { font-family: 'Fira Code', monospace; }
-        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
-        input:focus, button:focus { outline: 3px solid var(--logic-gold); outline-offset: 2px; }
-        .atcf-bar { height: 12px; border-radius: 6px; background: #1e293b; width: 100%; overflow: hidden; }
-        .atcf-fill { height: 100%; transition: width 0.5s ease-in-out; }
-        #guidance-modal { display: none; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
+        input[type=number] { background: #000; border: 1px solid #334155; color: #22c55e; padding: 2px 4px; border-radius: 4px; width: 60px; text-align: center; font-family: 'Fira Code'; }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
-    <div id="announcer" aria-live="assertive" class="sr-only"></div>
-
-    <div id="guidance-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="hud-panel max-w-3xl w-full p-8 relative max-h-[90vh] overflow-y-auto shadow-2xl border-blue-500/30">
-            <button onclick="toggleGuidance()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold" aria-label="Close Manual">✕ CLOSE</button>
-            
-            <h2 class="text-2xl font-black text-blue-400 mb-6 tracking-tighter border-b border-slate-800 pb-2">UCP Lab Manual: Calibration Guide</h2>
-            
-            <div class="space-y-8 text-sm text-slate-300">
-                <section>
-                    <h3 class="text-green-500 font-bold uppercase tracking-widest mb-2">Step 1: Calibrating the Root (c₀)</h3>
-                    <p class="mb-2"><strong class="text-white">Definition:</strong> The health of your "biological hardware."</p>
-                    <ul class="list-disc ml-5 space-y-1">
-                        <li><strong class="text-white">1.0 (Nominal):</strong> Physically safe, rested, and fed.</li>
-                        <li><strong class="text-white">0.5 (Stress/Interrupt):</strong> Experience of puberty ("Hardware Upgrade"), illness, or Somatic Dysphoria where body schema and sensory data mismatch.</li>
-                    </ul>
-                    <p class="mt-2 italic"><strong class="text-white">Why it matters:</strong> Low c₀ makes identity "shaky"; the brain uses metabolic energy just to calibrate your body map.</p>
-                </section>
-
-                <section>
-                    <h3 class="text-green-500 font-bold uppercase tracking-widest mb-2">Step 2: Calibrating the Trunk (c₁)</h3>
-                    <p class="mb-2"><strong class="text-white">Definition:</strong> Your Institutional Template Agreement (ITA)—the social scripts you were born into.</p>
-                    <ul class="list-disc ml-5 space-y-1">
-                        <li><strong class="text-white">1.0 (Aligned):</strong> Comfortable in assigned social and gender roles.</li>
-                        <li><strong class="text-white">0.1 (Liminal):</strong> "De-compiling" your upbringing. Rebellion, transition, or whistleblowing where "Legacy Code" no longer fits.</li>
-                    </ul>
-                    <p class="mt-2 italic"><strong class="text-white">Why it matters:</strong> Low c₁ creates Morphic Debt (Dₘₒᵣₚₕ), generating literal "Endogenous Heat" in your nervous system.</p>
-                </section>
-
-                <section>
-                    <h3 class="text-green-500 font-bold uppercase tracking-widest mb-2">Step 3: Calibrating the Leading Edge (cₙ)</h3>
-                    <p class="mb-2"><strong class="text-white">Definition:</strong> Your "Authenticity"—the freedom to rewrite your code (Fₜ).</p>
-                    <ul class="list-disc ml-5 space-y-1">
-                        <li><strong class="text-white">0.5 (Read-Only):</strong> Following external scripts to save energy.</li>
-                        <li><strong class="text-white">3.0 (Meta-Constructor):</strong> "Manual Mode," actively editing yourself.</li>
-                    </ul>
-                    <p class="mt-2 italic"><strong class="text-white">Why it matters:</strong> High cₙ increases your Sapolsky Limit, keeping you "online" during high-entropy events.</p>
-                </section>
-
-                <section class="border-t border-slate-800 pt-6">
-                    <h3 class="text-yellow-500 font-bold uppercase tracking-widest mb-2">Refactoring: The Entropic Trough</h3>
-                    <p><strong class="text-white">Computational Liminality:</strong> When Present Integration (Tₜ) drops in the middle of development.</p>
-                    <p class="mt-2"><strong class="text-white">The Experience:</strong> Feeling "hollow" or "fragmented" having shed childhood ITA (c₁) but not yet stabilized adult PRF.</p>
-                    <p class="mt-2"><strong class="text-white">The Physics:</strong> A state of maximum noise burning massive glucose just to "stay alive" as an agent.</p>
-                </section>
-            </div>
-        </div>
-    </div>
-
     <header class="max-w-7xl mx-auto mb-10 border-b border-slate-800 pb-6 flex justify-between items-end">
         <div>
             <h1 class="text-4xl font-black tracking-tight mb-2">UCP <span class="text-green-500">Ethics Lab</span></h1>
-            <p class="text-slate-400 text-sm uppercase tracking-widest font-bold">Identity Refactoring Interface // v5.7</p>
+            <p class="text-slate-400 text-sm uppercase tracking-widest font-bold">Morphic Alignment Module // v5.8</p>
         </div>
-        <button onclick="toggleGuidance()" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded font-black text-xs tracking-tighter transition shadow-lg">OPEN CALIBRATION GUIDE</button>
+        <div class="flex gap-4">
+            <div class="hud-panel px-6 py-2 text-center border-blue-900/50">
+                <span class="text-[9px] text-slate-500 block font-bold uppercase tracking-widest">Metabolic W</span>
+                <span id="budget-val" class="text-xl font-bold text-blue-400">100.0J</span>
+            </div>
+        </div>
     </header>
 
     <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <section aria-labelledby="prf-title" class="lg:col-span-3 space-y-8">
-            <div class="hud-panel p-6">
-                <h2 id="prf-title" class="text-lg font-bold text-green-500 mb-6 border-b border-slate-800 pb-2">1. Identity Kernel</h2>
+        <section class="lg:col-span-3 space-y-6">
+            <div class="hud-panel p-6 border-green-900/30">
+                <h2 class="text-xs font-bold text-green-500 mb-6 uppercase tracking-widest">1. Kernel Alignment</h2>
                 <div class="space-y-6">
                     <div>
-                        <label for="c0-val" class="block text-sm font-bold mb-1">c0 (Root)</label>
-                        <input type="number" id="c0-val" value="1.0" step="0.1" onchange="updateUI()" class="w-full bg-black text-green-400 p-2 rounded border border-slate-700 font-bold">
+                        <label for="c0-val" class="block text-[11px] text-white font-bold mb-1">c0: Root (Hardware)</label>
+                        <input type="number" id="c0-val" value="1.0" step="0.1" onchange="updateUI()" class="w-full">
+                        <p class="text-[9px] text-slate-500 mt-1 italic">Affects base stability and metabolic budget.</p>
                     </div>
                     <div>
-                        <label for="c1-val" class="block text-sm font-bold mb-1">c1 (Trunk)</label>
-                        <input type="number" id="c1-val" value="1.0" step="0.1" onchange="updateUI()" class="w-full bg-black text-green-400 p-2 rounded border border-slate-700 font-bold">
+                        <label for="c1-val" class="block text-[11px] text-white font-bold mb-1">c1: Trunk (ITA Role)</label>
+                        <input type="number" id="c1-val" value="1.0" step="0.1" onchange="updateUI()" class="w-full">
+                        <p class="text-[9px] text-slate-500 mt-1 italic">The "Trunk" width. Lower c1 increases Morphic Debt.</p>
                     </div>
                     <div>
-                        <label for="cN-val" class="block text-sm font-bold mb-1">cN (Leaf)</label>
-                        <input type="number" id="cN-val" value="1.0" step="0.1" onchange="updateUI()" class="w-full bg-black text-green-400 p-2 rounded border border-slate-700 font-bold">
+                        <label for="cN-val" class="block text-[11px] text-white font-bold mb-1">cN: Leaf (Agency)</label>
+                        <input type="number" id="cN-val" value="1.0" step="0.1" onchange="updateUI()" class="w-full">
+                        <p class="text-[9px] text-slate-500 mt-1 italic">Determines the Sapolsky Limit threshold.</p>
                     </div>
                 </div>
             </div>
 
             <div class="hud-panel p-6">
-                <h2 class="text-lg font-bold text-slate-300 mb-4 uppercase text-xs tracking-widest">2. Development Entropy</h2>
-                <input type="range" id="entropy-slider" min="0" max="100" value="30" oninput="updateUI()" class="w-full h-4">
-                <div class="flex justify-between text-[10px] mt-4 font-black uppercase text-slate-500">
-                    <span>Child</span><span class="text-yellow-500">Trough</span><span class="text-blue-500">Adult</span>
+                <h3 class="text-[10px] font-bold text-slate-400 uppercase mb-4 tracking-widest">2. Environmental Entropy (L_GC)</h3>
+                <input type="range" id="entropy-slider" min="0" max="100" value="30" class="w-full accent-green-500" oninput="updateUI()">
+                <div class="flex justify-between text-[9px] mt-2 font-bold text-slate-600 uppercase">
+                    <span>Quiet</span><span class="text-red-700">Sapolsky Limit</span>
                 </div>
             </div>
         </section>
 
-        <section aria-labelledby="view-title" class="lg:col-span-6 space-y-8">
+        <section class="lg:col-span-6 space-y-6">
             <div class="hud-panel p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <span id="state-tag" role="status" class="px-4 py-1 rounded bg-green-900 text-green-400 font-black tracking-widest text-sm">COHERENT</span>
+                <div class="flex justify-between items-center mb-4">
+                    <span id="state-tag" class="text-[10px] px-3 py-1 rounded bg-green-900 text-green-400 font-black tracking-widest uppercase">COHERENT</span>
                     <div class="text-right">
-                        <span class="text-[10px] text-slate-500 block font-bold">D-MORPH</span>
-                        <span id="debt-val" class="text-xl font-bold text-red-500 logic-font">0.00</span>
+                        <span class="text-[10px] text-slate-500 block font-bold tracking-widest uppercase">Morphic Debt ($D_{morph}$)</span>
+                        <span id="debt-val" class="text-2xl font-black logic-font">0.00</span>
                     </div>
                 </div>
-                <canvas id="treeCanvas" aria-hidden="true"></canvas>
-                <div id="text-telemetry" class="mt-6 p-4 bg-black/50 rounded border border-slate-800 text-sm">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div aria-label="At Vector">
-                            <span class="text-[10px] block font-bold text-blue-400">At (Past)</span>
-                            <div class="atcf-bar mt-1"><div id="at-fill" class="atcf-fill bg-blue-500" style="width: 80%;"></div></div>
-                        </div>
-                        <div aria-label="Tt Vector">
-                            <span class="text-[10px] block font-bold text-yellow-500">Tt (Present)</span>
-                            <div class="atcf-bar mt-1"><div id="tt-fill" class="atcf-fill bg-yellow-500" style="width: 50%;"></div></div>
-                        </div>
-                        <div aria-label="Ct Vector">
-                            <span class="text-[10px] block font-bold text-green-500">Ct (Future)</span>
-                            <div class="atcf-bar mt-1"><div id="ct-fill" class="atcf-fill bg-green-500" style="width: 30%;"></div></div>
-                        </div>
-                    </div>
-                </div>
+                <canvas id="treeCanvas"></canvas>
+                <div id="viewport-msg" class="text-center text-xs mt-4 text-slate-500 italic">"Substrate alignment nominal."</div>
             </div>
-            <button onclick="runSimulation()" class="w-full py-6 bg-green-600 hover:bg-green-500 text-black font-black text-lg uppercase rounded-xl transition shadow-2xl">Compile Identity</button>
+            <button onclick="runSimulation()" class="w-full py-5 bg-green-600 hover:bg-green-500 text-black font-black text-sm uppercase rounded-xl transition-all shadow-xl">Authorize Meta-Constructor Protocol</button>
         </section>
 
-        <section aria-labelledby="audit-title" class="lg:col-span-3 flex flex-col gap-8">
-            <div class="hud-panel p-6 flex-grow">
-                <h2 id="audit-title" class="text-xs font-black text-yellow-500 mb-6 uppercase tracking-widest">SAGE Audit</h2>
-                <div id="log" role="log" aria-live="polite" class="text-[10px] space-y-4 logic-font overflow-y-auto h-[400px] pr-2">
+        <section class="lg:col-span-3">
+            <div class="hud-panel p-6 h-full flex flex-col">
+                <h2 class="text-xs font-bold text-yellow-500 mb-6 uppercase tracking-widest">SAGE Audit Log</h2>
+                <div id="log" class="text-[10px] space-y-3 logic-font overflow-y-auto h-[450px] pr-2">
                     <p class="text-slate-600">> Kernel Ready.</p>
                 </div>
-            </div>
-            <div class="hud-panel p-6 flex justify-between">
-                <div><span class="text-[10px] text-slate-500 block font-bold uppercase">MA Index</span><span id="ma-val" class="text-2xl font-black">--</span></div>
-                <div class="text-right"><span class="text-[10px] text-slate-500 block font-bold uppercase">Budget</span><span id="budget-val" class="text-2xl font-black text-blue-400">100J</span></div>
+                <div class="mt-auto pt-6 border-t border-slate-800">
+                    <span class="text-[9px] text-slate-600 uppercase block font-bold">Current MA Index</span>
+                    <span id="ma-val" class="text-2xl font-bold text-white">--</span>
+                </div>
             </div>
         </section>
     </main>
@@ -156,63 +96,68 @@
         const ctx = canvas.getContext('2d');
         const slider = document.getElementById('entropy-slider');
         const logContainer = document.getElementById('log');
-        const announcer = document.getElementById('announcer');
-        const modal = document.getElementById('guidance-modal');
 
-        function toggleGuidance() { modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex'; }
-
-        function drawTree(x, y, len, angle, depth, color, thickness) {
-            ctx.beginPath(); ctx.moveTo(x, y);
-            const x2 = x + Math.cos(angle) * len; const y2 = y + Math.sin(angle) * len;
-            ctx.lineTo(x2, y2); ctx.strokeStyle = color; ctx.lineWidth = depth * thickness;
+        function drawTree(x, y, len, angle, depth, color, thickness, rootScale) {
+            ctx.beginPath(); 
+            ctx.moveTo(x, y);
+            const x2 = x + Math.cos(angle) * len; 
+            const y2 = y + Math.sin(angle) * len;
+            ctx.lineTo(x2, y2); 
+            ctx.strokeStyle = color; 
+            // c0 Influence: Base color intensity and thickness scaling
+            ctx.lineWidth = depth * thickness * (depth === 7 ? rootScale : 1);
             ctx.stroke();
             if (depth <= 0) return;
-            drawTree(x2, y2, len * 0.76, angle - 0.35, depth - 1, color, thickness);
-            drawTree(x2, y2, len * 0.76, angle + 0.35, depth - 1, color, thickness);
+            drawTree(x2, y2, len * 0.76, angle - 0.35, depth - 1, color, thickness, rootScale);
+            drawTree(x2, y2, len * 0.76, angle + 0.35, depth - 1, color, thickness, rootScale);
         }
 
         function updateUI() {
-            const c0 = parseFloat(document.getElementById('c0-val').value);
-            const c1 = parseFloat(document.getElementById('c1-val').value);
-            const cN = parseFloat(document.getElementById('cN-val').value);
+            const c0 = parseFloat(document.getElementById('c0-val').value) || 1.0;
+            const c1 = parseFloat(document.getElementById('c1-val').value) || 1.0;
+            const cN = parseFloat(document.getElementById('cN-val').value) || 1.0;
             const entropy = slider.value / 100;
+            
+            // 1. D-MORPH CALCULATION: Distance between internal truth (c0, cN) and world (c1)
+            const dMorph = Math.abs( ( (c0 + cN) / 2 ) - c1 ).toFixed(2);
+            const debtLabel = document.getElementById('debt-val');
+            debtLabel.innerText = dMorph;
+            
+            // D-MORPH COLOR DYNAMICS
+            if (dMorph < 0.2) debtLabel.style.color = "#22c55e"; // Green: Aligned
+            else if (dMorph < 0.6) debtLabel.style.color = "#fbbf24"; // Yellow: Strained
+            else debtLabel.style.color = "#ef4444"; // Red: Dysphoric/Morphic Debt
 
-            const at = Math.max(10, 100 - (entropy * 40));
-            const tt = Math.max(10, 100 - (Math.abs(0.5 - entropy) * 150));
-            const ct = Math.min(100, entropy * 120);
-            const dMorph = Math.max(0, (Math.abs(0.5 - entropy) * 2)).toFixed(2);
+            // 2. METABOLIC BUDGET: Affected by c0 (The Root)
+            // A higher c0 provides more "Metabolic Headroom"
+            const budget = (100 * c0) - (entropy * 80) - (dMorph * 30);
+            document.getElementById('budget-val').innerText = Math.max(0, budget).toFixed(1) + "J";
 
-            document.getElementById('at-fill').style.width = at + "%";
-            document.getElementById('tt-fill').style.width = tt + "%";
-            document.getElementById('ct-fill').style.width = ct + "%";
-            document.getElementById('debt-val').innerText = dMorph;
-
-            let state = entropy < 0.3 ? "READ-ONLY" : (entropy > 0.8 ? "COHERENT" : "REFACTORING");
-            document.getElementById('state-tag').innerText = state;
-            document.getElementById('state-tag').style.backgroundColor = state === "REFACTORING" ? "#713f12" : (state === "READ-ONLY" ? "#1e293b" : "#064e3b");
-
+            // 3. TREE VISUALIZATION
+            const sapolskyLimit = 0.65 + (cN * 0.05);
+            let state = entropy < 0.3 ? "READ-ONLY" : (entropy > sapolskyLimit ? "TRUNCATED" : "COHERENT");
+            
             canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
             ctx.clearRect(0,0,canvas.width,canvas.height);
-            let color = state === "REFACTORING" ? "#fbbf24" : (state === "READ-ONLY" ? "#94a3b8" : "#22c55e");
-            drawTree(canvas.width/2, canvas.height-20, 60, -Math.PI/2, 3 + Math.floor(cN*3), color, c1 * 2);
-            document.getElementById('budget-val').innerText = (100 - (entropy * 60)).toFixed(0) + "J";
+            let color = state === "TRUNCATED" ? "#7f1d1d" : (state === "READ-ONLY" ? "#1e293b" : "#22c55e");
+            
+            // Visual Impact of c0: Affects the rootScale (thickness of the initial branch)
+            drawTree(canvas.width / 2, canvas.height - 30, 70, -Math.PI / 2, 7, color, c1 * 1.2, c0 * 1.5);
+
+            document.getElementById('state-tag').innerText = state;
+            document.getElementById('state-tag').style.backgroundColor = state === "TRUNCATED" ? "#7f1d1d" : (state === "READ-ONLY" ? "#1e293b" : "#064e3b");
         }
 
         function runSimulation() {
-            const entropy = slider.value / 100;
-            const p = document.createElement('p');
-            if (entropy > 0.4 && entropy < 0.7) {
-                p.className = "text-yellow-500";
-                p.innerHTML = "> ALERT: Entropic Trough. System burning glucose for survival.";
-                document.getElementById('ma-val').innerText = "09";
-            } else {
-                p.className = "text-green-500";
-                p.innerHTML = "> SUCCESS: Kernel Refactored. Log Depth: 26.";
-                document.getElementById('ma-val').innerText = "26";
-            }
+            const cN = parseFloat(document.getElementById('cN-val').value) || 1.0;
+            const ma = Math.floor(15 + (cN * 5));
+            document.getElementById('ma-val').innerText = ma;
+            const p = document.createElement('p'); p.className = "text-green-500";
+            p.innerHTML = `> Audit complete. MA Index: ${ma}. Integrity Validated.`;
             logContainer.prepend(p);
         }
 
+        slider.oninput = updateUI;
         window.onload = updateUI;
     </script>
 </body>
